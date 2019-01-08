@@ -1,3 +1,13 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.form_error {
+  border: 1px solid red !important;
+}
+
 header {
   background-color: #000;
   display: flex;
@@ -25,44 +35,47 @@ header #form_cnt {
   width: 50%;
 }
 
-header #form_cnt #newsletter-form,
-header #form_cnt #double-form {
+header #form_cnt #newsletter_form_cnt,
+header #form_cnt #double_view {
   background-color: #fff;
   color: #000;
   width: 40%;
   margin: 2.5%;
 }
 
-header #form_cnt #newsletter-form h4,
-header #form_cnt #double-form h4 {
+header #form_cnt #newsletter_form_cnt h4,
+header #form_cnt #double_view h4 {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 30px;
 }
 
-header #form_cnt #newsletter-form .form_descr,
-header #form_cnt #double-form .form_descr {
+header #form_cnt #newsletter_form_cnt .form_descr,
+header #form_cnt #double_view .form_descr {
   margin-bottom: 20px;
 }
 
-header #form_cnt #newsletter-form .form_button,
-header #form_cnt #double-form .form_button {
+header #form_cnt #newsletter_form_cnt .form_button,
+header #form_cnt #double_view .form_button {
+  margin-top: 20px;
   background-color: #343434;
   border: none;
   color: white;
-  margin-top: 20px;
   outline: none;
-  padding: 20px 0;
+  height: 56px;
   width: 100%;
+  cursor: pointer;
 }
 
-header #form_cnt #newsletter-form .padding_cnt,
-header #form_cnt #double-form .padding_cnt {
+header #form_cnt #newsletter_form_cnt .padding_cnt,
+header #form_cnt #double_view .padding_cnt {
+  height: 100%;
   padding: 30px;
+  position: relative;
 }
 
-header #form_cnt #newsletter-form #email {
+header #form_cnt #newsletter_form_cnt #email {
   border: none;
   border-bottom: 1px solid black;
   margin-bottom: 15px;
@@ -71,30 +84,34 @@ header #form_cnt #newsletter-form #email {
   width: 100%;
 }
 
-header #form_cnt #newsletter-form #checkbox_cnt {
+header #form_cnt #newsletter_form_cnt #checkbox_cnt {
   display: flex;
 }
 
-header #form_cnt #newsletter-form #checkbox_cnt #privacy {
+header #form_cnt #newsletter_form_cnt #checkbox_cnt #privacy {
   display: none;
 }
 
-header #form_cnt #newsletter-form #checkbox_cnt .fa-square {
+header #form_cnt #newsletter_form_cnt #checkbox_cnt .fa-square {
   font-size: 24px;
   cursor: pointer;
 }
 
-header #form_cnt #newsletter-form #checkbox_cnt #privacy_text {
+header #form_cnt #newsletter_form_cnt #checkbox_cnt #privacy_text {
   padding-left: 20px;
 }
 
-header #form_cnt #newsletter-form .lighter_text {
+header #form_cnt #newsletter_form_cnt .lighter_text {
   color: gray;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+header #form_cnt #double_view ul > li {
+  margin: 10px 0;
+}
+
+header #form_cnt #double_view #push_btn {
+  position: absolute;
+  bottom: calc(56px / 2);
+  width: calc(100% - 60px);
 }
 
