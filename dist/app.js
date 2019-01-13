@@ -94,9 +94,22 @@
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
+  $('.fa-square').click(function () {
+    if ($(this).hasClass('fa-square')) {
+      $(this).removeClass('fa-square');
+      $(this).addClass('fa-check-square');
+      $('#privacy').prop('checked', true);
+    } else {
+      $(this).removeClass('fa-check-square');
+      $(this).addClass('fa-square');
+      $('#privacy').prop('checked', false);
+    }
+  });
   $('#newsletter_form').submit(function (e) {
     var email = $('#email');
     email.removeClass('form_error');
+    var privacy = $('#privacy');
+    privacy.removeClass('form_error');
 
     if (email.val() === "" || !email.val().includes("@") || !email.val().includes(".")) {
       email.val('');
@@ -104,11 +117,18 @@ $(document).ready(function () {
       email.attr('placeholder', 'Inserisci un\'email valida');
       e.preventDefault();
     }
+
+    if (!privacy.is(':checked')) {
+      $('#privacy_text').addClass('form_error');
+      e.preventDefault();
+    }
   });
+  var pushButton = $('#push_btn');
+  var applicationServerPublicKey = 'BACNAKMq6n6utHVrdIvPkTi_am1lK_Spqol69p0OeZGU9mP0cmqARiekWEVL8KNNSSCHFROf68kLnqpvpUWkiLs';
 
   if ('serviceWorker' in navigator && 'PushManager' in window) {
     console.log('Service Worker and Push is supported');
-    navigator.serviceWorker.register('dist/sw.js').then(function (swReg) {
+    navigator.serviceWorker.register('sw.js').then(function (swReg) {
       console.log('Service Worker is registered', swReg);
       swRegistration = swReg;
       initializeUI();
@@ -118,10 +138,21 @@ $(document).ready(function () {
   } else {
     console.warn('Push messaging is not supported');
     pushButton.textContent = 'Push Not Supported';
+    $('#push_view').removeClass('elements_view');
+    $('#download_view').addClass('elements_view');
   }
 
   function initializeUI() {
-    // Set the initial subscription value
+    pushButton.click(function () {
+      pushButton.prop('disabled', true);
+
+      if (isSubscribed) {
+        unsubscribeUser();
+      } else {
+        subscribeUser();
+      }
+    }); // Set the initial subscription value
+
     swRegistration.pushManager.getSubscription().then(function (subscription) {
       isSubscribed = !(subscription === null);
 
@@ -137,12 +168,54 @@ $(document).ready(function () {
 
   function updateBtn() {
     if (isSubscribed) {
-      pushButton.textContent = 'Disable Push Messaging';
+      pushButton.text('DISABLE UPDATE');
     } else {
-      pushButton.textContent = 'Enable Push Messaging';
+      pushButton.text('KEEP ME UPDATED');
     }
 
-    pushButton.disabled = false;
+    pushButton.prop('disabled', false);
+  }
+
+  function subscribeUser() {
+    var applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+    swRegistration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: applicationServerKey
+    }).then(function (subscription) {
+      console.log('User is subscribed.');
+      isSubscribed = true;
+      updateBtn();
+    }).catch(function (err) {
+      console.log('Failed to subscribe the user: ', err);
+      updateBtn();
+    });
+  }
+
+  function unsubscribeUser() {
+    swRegistration.pushManager.getSubscription().then(function (subscription) {
+      if (subscription) {
+        return subscription.unsubscribe();
+      }
+    }).catch(function (error) {
+      console.log('Error unsubscribing', error);
+    }).then(function () {
+      console.log('User is unsubscribed.');
+      isSubscribed = false;
+      updateBtn();
+    });
+  }
+
+  function urlB64ToUint8Array(base64String) {
+    var padding = '='.repeat((4 - base64String.length % 4) % 4);
+    var base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+    var rawData = window.atob(base64);
+    var outputArray = new Uint8Array(rawData.length);
+
+    for (var i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+
+    return outputArray;
   }
 });
 
