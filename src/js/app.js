@@ -36,6 +36,55 @@ $(document).ready(function() {
 
     });
 
+    $('#notify_btn').click(function () {
+        $('#double_view').show();
+        $('#newsletter_form_cnt').hide();
+        $(this).addClass('selected-box');
+        $('#newsletter_btn').removeClass('selected-box');
+    });
+
+    $('#newsletter_btn').click(function () {
+        $('#double_view').hide();
+        $('#newsletter_form_cnt').show();
+        $(this).addClass('selected-box');
+        $('#notify_btn').removeClass('selected-box');
+    });
+
+    $.ajax({
+        url: "https://jsonplaceholder.typicode.com/photos",
+        method: "GET",
+        success: function (data) {
+            for(let i = 0; i < 24; i++) {
+                console.log(data[i]);
+                if(i <= 11) {
+                    $('#women_panel').append(
+                        '<div class="col-md-4 panel-square">' +
+                            '<img class="img-fluid mt-4 mb-4 panel-img" src="' + data[i].url + '">' +
+                            '<p class="text-center">' +
+                                data[i].title +
+                            '</p>' +
+                        '</div>'
+                    );
+                }
+                else {
+                    $('#men_panel').append(
+                        '<div class="col-md-4 panel-square">' +
+                        '<img class="img-fluid mt-4 mb-4 panel-img" src="' + data[i].url + '">' +
+                        '<p class="text-center">' +
+                        data[i].title +
+                        '</p>' +
+                        '</div>'
+                    );
+                }
+            }
+        }
+    });
+
+    $('#panel_search').keypress(function () {
+
+    });
+
+    // PUSH NOTIFICATION
     const pushButton = $('#push_btn');
     const applicationServerPublicKey = 'BACNAKMq6n6utHVrdIvPkTi_am1lK_Spqol69p0OeZGU9mP0cmqARiekWEVL8KNNSSCHFROf68kLnqpvpUWkiLs';
 
@@ -54,7 +103,6 @@ $(document).ready(function() {
             });
     } else {
         console.warn('Push messaging is not supported');
-        pushButton.textContent = 'Push Not Supported';
         $('#push_view').removeClass('elements_view');
         $('#download_view').addClass('elements_view');
     }

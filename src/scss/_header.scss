@@ -96,6 +96,7 @@ header {
     }
 
     #double_view {
+
       .elements_view {
         height: 100%;
         display: flex !important;
@@ -138,4 +139,15 @@ header {
     }
   }
 
+}
+
+@media (min-width: 576px) {
+  header {
+    #form_cnt {
+
+      #newsletter_form_cnt {
+        display: block !important;
+      }
+    }
+  }
 }

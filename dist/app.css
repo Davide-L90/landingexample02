@@ -146,3 +146,36 @@ header #form_cnt #double_view #download_view #download_img {
   }
 }
 
+@media (min-width: 576px) {
+  header #form_cnt #newsletter_form_cnt {
+    display: block !important;
+  }
+}
+
+h5 {
+  font-weight: bold;
+}
+
+#panel_search {
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+  padding: 10px 0;
+  width: 70%;
+}
+
+.panel-square {
+  position: relative;
+}
+
+.panel-square p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 30px;
+  font-weight: bold;
+  width: 85%;
+}
+
