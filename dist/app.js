@@ -140,8 +140,6 @@ $(document).ready(function () {
     method: "GET",
     success: function success(data) {
       for (var i = 0; i < 24; i++) {
-        console.log(data[i]);
-
         if (i <= 11) {
           $('#women_panel').append('<div class="col-md-4 panel-square">' + '<img class="img-fluid mt-4 mb-4 panel-img" src="' + data[i].url + '">' + '<p class="text-center">' + data[i].title + '</p>' + '</div>');
         } else {
@@ -150,7 +148,19 @@ $(document).ready(function () {
       }
     }
   });
-  $('#panel_search').keypress(function () {}); // PUSH NOTIFICATION
+  $('#panel_search').keyup(function () {
+    var searchWord = $(this).val();
+    console.log(searchWord);
+    $('.panel-square').each(function () {
+      var title = $(this).children('p').text();
+
+      if (!title.includes(searchWord)) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    });
+  }); // PUSH NOTIFICATION
 
   var pushButton = $('#push_btn');
   var applicationServerPublicKey = 'BACNAKMq6n6utHVrdIvPkTi_am1lK_Spqol69p0OeZGU9mP0cmqARiekWEVL8KNNSSCHFROf68kLnqpvpUWkiLs';

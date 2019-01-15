@@ -55,7 +55,6 @@ $(document).ready(function() {
         method: "GET",
         success: function (data) {
             for(let i = 0; i < 24; i++) {
-                console.log(data[i]);
                 if(i <= 11) {
                     $('#women_panel').append(
                         '<div class="col-md-4 panel-square">' +
@@ -80,8 +79,18 @@ $(document).ready(function() {
         }
     });
 
-    $('#panel_search').keypress(function () {
-
+    $('#panel_search').keyup(function () {
+        let searchWord = $(this).val();
+        console.log(searchWord);
+        $('.panel-square').each(function () {
+           let title = $(this).children('p').text();
+           if(!title.includes(searchWord)) {
+               $(this).hide();
+           }
+           else {
+               $(this).show();
+           }
+        });
     });
 
     // PUSH NOTIFICATION
