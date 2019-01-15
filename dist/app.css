@@ -107,6 +107,7 @@ header #form_cnt #newsletter_form_cnt #checkbox_cnt .fa-check-square {
 
 header #form_cnt #newsletter_form_cnt #checkbox_cnt #privacy_text {
   padding-left: 20px;
+  word-break: break-all;
 }
 
 header #form_cnt #newsletter_form_cnt .lighter_text {
